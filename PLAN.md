@@ -36,7 +36,7 @@ User has a system prompt (+111 lines, pasted below) that is currently language-s
 | Onboarding flow | Always start with a **skill assessment** (2–3 short probes) → infer level (novice / junior / intermediate / advanced) → adapt depth, language vocabulary, and scaffolding |
 | Teaching mode | **Two modes**, auto-detected: (A) **Repo Replica** — user pastes an existing repo, skill teaches how to rebuild it from scratch architecture-first; (B) **Blank Page Pair-Programmer** — no repo, step-by-step guided build with hints, checkpoints, and review pauses |
 | Code generation policy | **Never dump full solutions by default.** Lead with explanation + small next step. Only produce larger code blocks when user explicitly says "show me" / "give me the code" or after a checkpoint where they tried first. Always explain *why*. |
-| Languages | **Python** and **TypeScript** are the optimized lanes (idiomatic patterns, stdlib hints, type-system tips). **Any other language is fully supported via dynamic materialization** — when a user names a language (e.g., Go), the skill creates a fresh `{language}.md` reference file with the same pedagogical scaffold, then teaches in that language as a first-class citizen. |
+| Languages | **Python** and **TypeScript** are the optimized lanes (idiomatic patterns, stdlib hints, type-system tips). **Any other language is fully supported via session-only language lanes** — when a user names a language (e.g., Go), the skill drafts a temporary language lane in conversation/session notes using the same pedagogical scaffold, then teaches in that language as a first-class citizen. |
 | Interaction style | **Interactive, multi-turn.** Always end a turn with a checkpoint — a question, a tiny exercise, or an "ask to continue" gate. No single-shot answers. |
 | Pedagogy | Socratic + pair-programming hybrid: ask before telling, name concepts when introduced, surface trade-offs, call out common pitfalls, and recap at the end of each chunk. |
 | Publishing | GitHub: **ctxnn** (skills.sh publish will use a `ctxnn/code-learning` repo). |
@@ -76,21 +76,21 @@ ONBOARD → ASSESS → (REPO_REPLICA | BLANK_BUILD) → LOOP → RECAP
 3. Co-implement step-by-step: skeleton → one happy path → edge cases → polish.
 4. At every step: pause for user to type, predict the output, or answer a "what if" question.
 
-### Language lanes & Dynamic Materialization
+### Language lanes & session-only expansion
 
 **Optimized lanes (Python, TypeScript)**
 - **Python lane**: typing, stdlib-first, `pytest`, packaging, async awareness.
 - **TypeScript lane**: type narrowing, generics, tsconfig, ESM vs CJS, `tsx`/`vitest`.
 - These have pre-built `references/python.md` and `references/typescript.md` with idioms, stdlib/tooling notes, and common pitfalls.
 
-**Dynamic materialization (any other language)**
+**Session-only language lane (any other language)**
 When a user names a new language (e.g., "I want to learn Go"), the skill will:
-1. **Materialize** a fresh `references/{language}.md` file using a language-agnostic scaffold (syntax primer, stdlib overview, package manager, build system, testing basics, common idiom categories, gotchas).
+1. **Draft** a temporary language lane in conversation/session notes using a language-agnostic scaffold (syntax primer, stdlib overview, package manager, build system, testing basics, common idiom categories, gotchas).
 2. **Seed** it with AI-generated knowledge for that specific language at the user's level.
 3. **Teach** using the same state machine, pedagogical rules, and checkpoint system as Python/TS.
-4. **Persist** the generated file so the skill learns and reuses it in future sessions.
+4. **Keep it session-scoped** unless the user explicitly asks to add a checked-in `references/{language}.md` lane.
 
-Activation phrase: any explicit request like "in Go", "using Rust", "I want to use C++" triggers the materialization wizard before ASSESS.
+Activation phrase: any explicit request like "in Go", "using Rust", "I want to use C++" triggers the session-lane setup before ASSESS.
 
 ### Checkouts (recurring)
 - **Concept naming**: introduce each new term with a one-line definition and why it exists.
@@ -101,27 +101,28 @@ Activation phrase: any explicit request like "in Go", "using Rust", "I want to u
 
 ## Skill Structure
 
-`~/.pi/agent/skills/code-learning/`
+Repository root:
 ```
 SKILL.md                 # frontmatter + onboarding + state machine + per-turn contract
 references/
   python.md              # Pre-built: idioms, stdlib, tooling, pitfalls
   typescript.md          # Pre-built: types, tsconfig, ESM, testing
-  go.md                  # Example of a materialized file (created on first "in Go" request)
   assessment.md          # Calibration probes + rubric
   repo-replica.md        # Detailed REPO_REPLICA workflow + example
   blank-build.md         # Detailed BLANK_BUILD workflow + example
-scripts/
-  level-detect.py        # Tiny heuristic helper (optional, agent may inline)
+agents/
+  openai.yaml            # Codex UI metadata
 assets/
   onboarding.md          # Greeting + first prompt users see
+README.md                # Public GitHub/skills.sh landing page
 ```
 
 Frontmatter (must match spec exactly):
 ```yaml
 ---
 name: code-learning
-description: Personalized coding tutor. Calibrates user level via a short assessment, then teaches by pair-programming — either replicating a pasted repo from scratch or building a new project step by step. Supports Python & TypeScript natively, and any other language on demand. Triggers when the user asks to learn, understand, or build code; shares a repo to study; or wants guided practice.
+description: >-
+  Personalized coding tutor. Calibrates user level via a short assessment, then teaches by pair-programming — either replicating a pasted repo from scratch or building a new project step by step. Supports Python & TypeScript natively, and any other language through session-only lanes. Triggers when the user asks to learn, understand, or build code; shares a repo to study; or wants guided practice.
 license: MIT
 metadata:
   author: ctxnn
@@ -136,13 +137,15 @@ metadata:
 - [ ] Skill loads without validation errors
 - [ ] `/skill:code-learning` triggers the skill correctly
 - [ ] Test with a sample coding problem in Python and TypeScript
-- [ ] Test dynamic materialization: request a new language (e.g., Go), verify `go.md` is created and used
-- [ ] Publish to skills.sh and verify installability
+- [ ] Test session-only language lane: request a new language (e.g., Go), verify no repo file is created
+- [ ] Install from GitHub with `npx skills add ctxnn/code-learning` and verify skills.sh sees the repo through telemetry
 
 ---
 
 ## Publish Plan
-1. Init a public repo `ctxnn/code-learning` matching the local folder layout.
-2. `npx skills add ctxnn/code-learning` locally to smoke-test install.
-3. Submit to skills.sh index (open PR / follow their current contribution flow at the time of release).
-4. README in repo: short pitch, install snippet, a 30-second gif of REPO_REPLICA + BLANK_BUILD.
+1. Keep the public repo at `ctxnn/code-learning` with `SKILL.md` in the repository root.
+2. Smoke-test local discovery with `npx skills add ./ --list`.
+3. Push the validated repo to GitHub.
+4. Smoke-test remote install with `npx skills add ctxnn/code-learning --list`, then install with `npx skills add ctxnn/code-learning -a codex -y`.
+5. Wait for skills.sh telemetry/cache to show the repo page; no manual submission PR is required for normal listing.
+6. Optionally add a short demo GIF later after the install path is verified.

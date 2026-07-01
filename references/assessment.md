@@ -76,7 +76,7 @@ Three micro-tasks. Present them all at once. Wait for responses, then score.
 
 **What you're looking for:**
 - **Novice**: Struggles to start, or produces non-working code.
-- **Junior**: Working solution with `split()` and a dict/map, but maybe inefficient or忽略了 edge cases.
+- **Junior**: Working solution with `split()` and a dict/map, but maybe inefficient or ignores edge cases.
 - **Intermediate**: Clean solution with `collections.Counter` or `reduce`, mentions lowercasing or punctuation as follow-up.
 - **Advanced**: Concise solution with a generator expression, notes `Counter` from stdlib, and discusses `O(n)` time / `O(k)` space trade-offs or when a trie would be better.
 

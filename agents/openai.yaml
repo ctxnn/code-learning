@@ -1,0 +1,7 @@
+interface:
+  display_name: "Code Learning"
+  short_description: "Adaptive coding tutor for guided practice"
+  default_prompt: "Use $code-learning to help me learn a codebase or build a project step by step."
+
+policy:
+  allow_implicit_invocation: true

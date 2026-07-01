@@ -1,6 +1,7 @@
 ---
 name: code-learning
-description: Personalized coding tutor. Calibrates user level via a short assessment, then teaches by pair-programming in any language (Python & TypeScript optimized lanes). Two modes: repo-replica (teach rebuilding a pasted repo from scratch) and blank-build (pair-program a new project). Interactive, multi-turn, Socratic pedagogy. Triggers when the user asks to learn, understand, or build code; shares a repo to study; or wants guided practice.
+description: >-
+  Personalized coding tutor. Calibrates user level via a short assessment, then teaches by pair-programming in any language (Python & TypeScript optimized lanes). Two modes: repo-replica (teach rebuilding a pasted repo from scratch) and blank-build (pair-program a new project). Interactive, multi-turn, Socratic pedagogy. Triggers when the user asks to learn, understand, or build code; shares a repo to study; or wants guided practice.
 license: MIT
 metadata:
   author: ctxnn
@@ -119,15 +120,15 @@ Load detailed workflow from `references/blank-build.md`.
 
 ---
 
-## Dynamic Materialization
+## Dynamic Language Lanes
 
 When the user names any language, load its lane:
 
 - **Python** → Load `references/python.md`
 - **TypeScript** → Load `references/typescript.md`
-- **Any other language** → Create `references/{language}.md` on first use, then treat as first-class citizen.
+- **Any other language** → Build a session-only language lane from the scaffold below and store it in conversation/session notes. Do not create or modify files unless the user explicitly asks to add a checked-in reference lane.
 
-**Scaffold for new `references/{language}.md`:**
+**Session-only scaffold for a new language lane:**
 
 ```markdown
 # {Language} Lane
@@ -158,7 +159,7 @@ Frameworks, running tests, assertions, mocking.
 List 3–5 common beginner mistakes and idiomatic corrections.
 ```
 
-After creation, use it exactly like the pre-built Python and TypeScript lanes.
+After drafting the session-only lane, use it like the pre-built Python and TypeScript lanes for the rest of the learning session. If the user later asks to make the lane permanent, propose adding `references/{language}.md` as a normal repo change.
 
 ---
 
@@ -203,11 +204,11 @@ Load these reference files as needed during the session:
 | File | Purpose | When to Load |
 |------|---------|--------------|
 | `references/assessment.md` | Detailed assessment probes and solutions | ONBOARD → ASSESS |
-| `references/python.md` | PythonKnowledge base for Python-specific teaching | Language == Python |
+| `references/python.md` | Python knowledge base for Python-specific teaching | Language == Python |
 | `references/typescript.md` | Knowledge base for TypeScript-specific teaching | Language == TypeScript |
 | `references/repo-replica.md` | Detailed repo-replica workflow, mapping templates | Mode == REPO_REPLICA |
 | `references/blank-build.md` | Detailed blank-build workflow, scaffolding rules | Mode == BLANK_BUILD |
-| `references/{language}.md` | Auto-generated on first use for any non-Python/TS language | Language first mentioned |
+| Session-only `{language}` lane | Temporary scaffold for any non-Python/TS language | Language first mentioned |
 
 **Loading rule**: Load the relevant reference at the start of the phase (e.g., load `references/python.md` when the user says "I want to learn Python"). Do not load all references at once.
 
@@ -217,4 +218,4 @@ Load these reference files as needed during the session:
 
 - Keep a running session log of `user_level`, current mode, current state, and 4-bullet summaries.
 - If the user switches languages mid-session, load the new lane and note the switch.
-- If a reference file is missing, create it from the scaffold above before proceeding.
+- If a checked-in reference file is missing, create a session-only lane from the scaffold above before proceeding.

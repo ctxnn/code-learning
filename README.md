@@ -1,13 +1,15 @@
 # code-learning
 
-> A personalized coding tutor skill for pi. Learn any programming language through pair-programming — whether you're dissecting an existing repo or building from scratch.
+[![skills.sh](https://skills.sh/b/ctxnn/code-learning)](https://skills.sh/ctxnn/code-learning)
+
+> A personalized coding tutor skill for agent coding environments. Learn any programming language through pair-programming — whether you're dissecting an existing repo or building from scratch.
 
 ## What it does
 
 - **Calibrates your level** with a 3-probe assessment
 - **Teaches you to rebuild repos** layer by layer (REPO_REPLICA mode)
 - **Pair-programs from blank page** with guided checkpoints (BLANK_BUILD mode)
-- **Supports any language** — Python & TypeScript have optimized lanes; every other language is materialized on demand
+- **Supports any language** — Python & TypeScript have optimized lanes; every other language gets a session-only lane on demand
 
 ## Install
 
@@ -23,7 +25,7 @@ Trigger the skill and follow the calibration:
 /skill:code-learning
 ```
 
-Or simply say: *"I want to learn how to build a REST API in Go"* — the skill will materialize a Go reference and start teaching.
+Or simply say: *"I want to learn how to build a REST API in Go"* — the skill will draft a Go lane for the session and start teaching.
 
 ## Modes
 
@@ -35,7 +37,7 @@ Or simply say: *"I want to learn how to build a REST API in Go"* — the skill w
 ## Language Support
 
 - **Optimized**: Python, TypeScript (pre-built references with idioms, tooling, pitfalls)
-- **Dynamic**: Any language via on-demand materialization (`references/{language}.md`)
+- **Dynamic**: Any language via a session-only teaching lane
 
 ## Why this skill?
 

@@ -1,6 +1,10 @@
 # macOS
 .DS_Store
 
+# local skills CLI installs
+/.agents/
+/skills-lock.json
+
 # node
 node_modules/
 
