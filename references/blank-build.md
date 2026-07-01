@@ -1,5 +1,7 @@
 # BLANK_BUILD Mode — Detailed Workflow
 
+> **Note:** This is an extended BLANK_BUILD workflow reference. The core workflow is inlined in SKILL.md. This file is optional enrichment.
+
 ## When to Use
 User wants to build something from scratch. No repo provided.
 

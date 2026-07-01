@@ -1,5 +1,7 @@
 # TypeScript Teaching Reference
 
+> **Note:** This is an extended TypeScript teaching reference. Core content is inlined in SKILL.md. This file is optional enrichment.
+
 Quick reference for the TypeScript lane. Loaded when the user is working in TypeScript.
 
 ---

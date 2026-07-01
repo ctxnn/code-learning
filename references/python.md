@@ -1,5 +1,7 @@
 # Python Teaching Reference
 
+> **Note:** This is an extended Python teaching reference. Core idioms and pitfalls are inlined in SKILL.md. This file is optional enrichment.
+
 Quick reference for the Python lane. Loaded when the user is working in Python.
 
 ---

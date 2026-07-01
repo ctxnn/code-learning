@@ -1,6 +1,6 @@
 interface:
   display_name: "Code Learning"
-  short_description: "Adaptive coding tutor for guided practice"
+  short_description: "Adaptive coding tutor for guided practice and complex system building"
   default_prompt: "Use $code-learning to help me learn a codebase or build a project step by step."
 
 policy:

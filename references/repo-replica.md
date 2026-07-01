@@ -1,5 +1,7 @@
 # REPO_REPLICA Mode — Detailed Workflow
 
+> **Note:** This is an extended REPO_REPLICA workflow reference. The core workflow is inlined in SKILL.md. This file is optional enrichment.
+
 ## When to Use
 User shares an existing codebase (paste, zip, or paths) and wants to learn how to rebuild it from scratch.
 

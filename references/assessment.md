@@ -1,5 +1,7 @@
 # Calibration Assessment
 
+> **Note:** This file provides extended assessment material. The core probes and rubric are inlined in SKILL.md. This file is optional enrichment for agents with filesystem access to the source repo.
+
 ## Purpose
 Determine the learner's current level in a single, ~5-minute session. Results persist as `user_level` in conversation context.
 
