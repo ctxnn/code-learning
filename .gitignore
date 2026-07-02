@@ -19,3 +19,6 @@ venv/
 .vscode/
 .idea/
 *.swp
+
+# local development reference
+/how_it_work.md
